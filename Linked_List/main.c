@@ -39,26 +39,6 @@ int appendNode(Node* head, int append_num) {
 }
 
 
-int insertNode(Node* head, int value, int index) {					// 구현하는데 머리 좀 썻음...;;; ㅎㅎ
-	Node* insert_node = (Node*)malloc(sizeof(Node));
-	insert_node->value = value;
-
-
-	Node* curr = head;
-	int index_plus = 0;
-	while (1) {
-		if (index_plus++ == index) {
-			insert_node->next = curr->next;
-			curr->next = insert_node;
-			break;
-		}
-		curr = curr->next;
-	}
-	head->value++;												// insert했으니깐 길이 늘려주기
-	return 0;
-}
-
-
 int appendArrayNode(Node* head, int* array, int size_array) {		// 흐음 head를 안쓰고 가능할려나.. 생각해보자..
 	int i;
 
@@ -92,6 +72,26 @@ int appendArrayNode(Node* head, int* array, int size_array) {		// 흐음 head를 안
 }
 
 
+int insertNode(Node* head, int value, int index) {					// 구현하는데 머리 좀 썻음...;;; ㅎㅎ
+	Node* insert_node = (Node*)malloc(sizeof(Node));
+	insert_node->value = value;
+
+
+	Node* curr = head;
+	int index_plus = 0;
+	while (1) {
+		if (index_plus++ == index) {
+			insert_node->next = curr->next;
+			curr->next = insert_node;
+			break;
+		}
+		curr = curr->next;
+	}
+	head->value++;												// insert했으니깐 길이 늘려주기
+	return 0;
+}
+
+
 int removeNode(Node* head, int index) {
 	Node* curr = head;
 
@@ -111,6 +111,38 @@ int removeNode(Node* head, int index) {
 }
 
 
+int indexNode(Node* head, int index) {
+	Node* curr = head->next;
+
+	int index_plus = 0;
+	while (1) {
+		if (index_plus++ == index) {
+			return curr->value;
+		}
+		curr = curr->next;
+	}
+
+	return 0;
+}
+
+
+int findNode(Node* head, int num) {
+	Node* curr = head->next;
+
+	int index_plus = 0;
+	while (1) {
+		if (curr->value == num) {
+			return index_plus;
+		}
+		index_plus++;
+		curr = curr->next;
+	}
+
+	return -1;
+}
+
+
+
 int lenNode(Node* head) {
 	return head->value;
 }
@@ -124,8 +156,6 @@ int printNode(Node* head) {
 	}
 	return 0;
 }
-
-
 
 
 int freeNode(Node* head) {
@@ -156,7 +186,10 @@ int main() {
 
 
 	printNode(head);
-	printf("\n\n%d\n", lenNode(head));
+
+	printf("\n\nindexNode : %d\n", indexNode(head, 0));
+	printf("\n\nfindNode : %d\n", findNode(head, 1));
+	printf("\n\nlenNode : %d\n", lenNode(head));
 
 	freeNode(head);
 }
