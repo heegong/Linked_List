@@ -59,6 +59,39 @@ int insertNode(Node* head, int value, int index) {					// 구현하는데 머리 좀 썻�
 }
 
 
+int appendArrayNode(Node* head, int* array, int size_array) {		// 흐음 head를 안쓰고 가능할려나.. 생각해보자..
+	int i;
+
+	Node* append_array_node = (Node*)malloc(sizeof(Node));
+	Node* curr = append_array_node;
+
+
+	for (i = 0; i < size_array; i++) {
+		Node* qu = (Node*)malloc(sizeof(Node));
+		qu->value = array[i];
+		curr->next = qu;
+		curr = curr->next;
+	}
+	curr->next = NULL;
+
+
+	curr = head;
+	while (1) {
+		if (curr->next == NULL) {
+			curr->next = append_array_node->next;
+
+			free(append_array_node);
+			break;
+		}
+		curr = curr->next;
+	}
+
+
+	head->value += size_array;
+	return 0;
+}
+
+
 int removeNode(Node* head, int index) {
 	Node* curr = head;
 
@@ -110,11 +143,16 @@ int freeNode(Node* head) {
 int main() {
 	Node* head = makeNode();
 
-	appendNode(head, 1);
+	int array[5] = { 1,2,3,4,5 };
+
+	appendArrayNode(head, array, sizeof(array) / sizeof(int) );
+	appendNode(head, 6);
+
+	/*appendNode(head, 1);
 	appendNode(head, 2);
 	appendNode(head, 4);
 	insertNode(head, 3, 2);
-	removeNode(head, 0);
+	removeNode(head, 0);*/
 
 
 	printNode(head);
